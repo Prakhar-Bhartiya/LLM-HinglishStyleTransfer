@@ -1,3 +1,9 @@
+"""
+Template for running A/B pairwise evaluations on responses (such as those from AI models).
+It loads evaluation results from a JSON file (or uses placeholder data if the file is not available or invalid),
+prepares comparison pairs, records votes, computes overall performance metrics, and displays results in a Streamlit UI.
+"""
+
 import streamlit as st
 import pandas as pd
 import random
@@ -11,50 +17,47 @@ from pandas.io.formats.style import Styler
 # ─────────────────────────────────────────────────────────────────────────────
 # DATA LOADING
 # ─────────────────────────────────────────────────────────────────────────────
-EVAL_RESULTS_FILE = "blind_test_data_output.json"
+EVAL_RESULTS_FILE = "ab_test_data_output.json"
 
+# Example from Qwen-Base
+
+# PLACEHOLDER_RESULTS = {
+# "Qwen2.5-3B-Instruct-base-model": {
+#         "model_name": "Qwen/Qwen2.5-3B-Instruct",
+#         "eval_type": "Base Model",
+#         "per_prompt_details": [
+#             {"prompt": "Hey kaise ho?", "response": "Main theek hoon. Aap batao?", "llm_evaluation": {"status": "Completed"}},
+#             {"prompt": "Assignments ka tension hai?", "response": "Haan thoda toh hai.", "llm_evaluation": {"status": "Completed"}},
+#             {"prompt": "Suggest hangout places?", "response": "Campus ke paas Chai Point try kar sakte ho.", "llm_evaluation": {"status": "Completed"}},
+#         ],
+#         "aggregated_metrics": {"status": "Completed"},
+#     }
+# }
+
+# <MODIFY TO BASED ON YOUR EVAL RESULTS>
 PLACEHOLDER_RESULTS = {
-    "Qwen/Qwen1.5-1.8B-Chat (Base)": {
-        "model_name": "Qwen/Qwen1.5-1.8B-Chat (Base)",
-        "eval_type": "Base Model",
+    "Model_A": {
+        "model_name": "Model_A",
+        "eval_type": "Baseline",
         "per_prompt_details": [
-            {"prompt": "Hey kaise ho?", "response": "Main theek hoon. Aap batao?", "llm_evaluation": {"status": "Completed"}},
-            {"prompt": "Assignments ka tension hai?", "response": "Haan thoda toh hai.", "llm_evaluation": {"status": "Completed"}},
-            {"prompt": "Suggest hangout places?", "response": "Campus ke paas Chai Point try kar sakte ho.", "llm_evaluation": {"status": "Completed"}},
+            {"prompt": "Sample prompt text 1", "response": "Sample response for prompt 1.", "llm_evaluation": {"status": "Completed"}},
+            {"prompt": "Sample prompt text 2", "response": "Another sample response.", "llm_evaluation": {"status": "Completed"}},
         ],
         "aggregated_metrics": {"status": "Completed"},
     },
-    "Qwen1.5B_Hinglish_Adapter_v1": {
-        "model_name": "Qwen1.5B_Hinglish_Adapter_v1",
-        "eval_type": "LoRA Adapter",
+    "Model_B": {
+        "model_name": "Model_B",
+        "eval_type": "Experimental",
         "per_prompt_details": [
-            {"prompt": "Hey kaise ho?", "response": "Arre bhai! Main toh ekdum mast hoon! Tu bata?", "llm_evaluation": {"status": "Completed"}},
-            {"prompt": "Assignments ka tension hai?", "response": "Tension mat le yaar! Chill kar, ho jaayega.", "llm_evaluation": {"status": "Completed"}},
-            {"prompt": "Suggest hangout places?", "response": "Bro, Chai Point best hai! Ya fir canteen mein chill karte hain.", "llm_evaluation": {"status": "Completed"}},
+            {"prompt": "Sample prompt text 1", "response": "Alternate response for prompt 1.", "llm_evaluation": {"status": "Completed"}},
+            {"prompt": "Sample prompt text 2", "response": "Different sample response.", "llm_evaluation": {"status": "Completed"}},
         ],
         "aggregated_metrics": {"status": "Completed"},
-    },
-    "Qwen1.5B_Hinglish_Adapter_v2": {
-        "model_name": "Qwen1.5B_Hinglish_Adapter_v2",
-        "eval_type": "LoRA Adapter",
-        "per_prompt_details": [
-            {"prompt": "Hey kaise ho?", "response": "Hey! Sab बढ़िया yaar. College life rocks! Aur tera kya scene?", "llm_evaluation": {"status": "Completed"}},
-            {"prompt": "Assignments ka tension hai?", "response": "Assignments? Woh toh hote rehte hain. Deadline se pehle kar lenge. No stress!", "llm_evaluation": {"status": "Completed"}},
-            {"prompt": "Suggest hangout places?", "response": "Error during generation", "llm_evaluation": "Processing Error"},
-        ],
-        "aggregated_metrics": {"status": "Completed"},
-    },
-    "Failed_Model": {
-        "model_name": "Failed_Model",
-        "eval_type": "LoRA Adapter",
-        "error": "Load failed",
-        "aggregated_metrics": {"status": "Model Loading Failed"},
-        "per_prompt_details": [],
     },
 }
 
 
-def load_evaluation_results(filepath: str) -> Dict[str, Any] | List[Dict[str, str]]:
+def load_evaluation_results(filepath):
     """Load either legacy dict‑style or new list‑style evaluation JSON."""
     try:
         with open(filepath, "r") as f:
@@ -73,15 +76,14 @@ def load_evaluation_results(filepath: str) -> Dict[str, Any] | List[Dict[str, st
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# PREP PAIRS
+# PREPARE PAIRS FOR COMPARISON
 # ─────────────────────────────────────────────────────────────────────────────
-def prepare_ab_test_data(
-    results: Dict[str, Any] | List[Dict[str, str]]
-) -> List[Tuple[str, str, str, str, str]]:
-    """Returns [(prompt, model_A, resp_A, model_B, resp_B), …]"""
+def prepare_ab_test_data(results):
+    """Extracts and generates comparison pairs as a list of tuples: 
+    (prompt, model_A, resp_A, model_B, resp_B)."""
+
     prompt_responses = defaultdict(list)
 
-    # new flat‑list format
     if isinstance(results, list):
         for row in results:
             prompt = row.get("prompt", "").strip()
@@ -90,7 +92,6 @@ def prepare_ab_test_data(
             if prompt and model and resp:
                 prompt_responses[prompt].append({"model": model, "response": resp})
 
-    # legacy dict‑of‑models format
     else:
         for model, res in results.items():
             if res.get("aggregated_metrics", {}).get("status") != "Completed":
@@ -115,9 +116,9 @@ def prepare_ab_test_data(
 # ─────────────────────────────────────────────────────────────────────────────
 # SCORE AGGREGATION
 # ─────────────────────────────────────────────────────────────────────────────
-def calculate_ab_results(
-    votes: Dict[Tuple[str, ...], Dict[str, str]]
-) -> Tuple[Styler, pd.DataFrame]:   
+def calculate_ab_results(votes):
+    """Calculates overall win/tie/loss metrics and head-to-head comparisons from votes."""
+
     model_wins, model_ties, model_losses, model_comparisons = (
         defaultdict(int),
         defaultdict(int),
@@ -190,7 +191,7 @@ def calculate_ab_results(
 # STREAMLIT UI
 # ─────────────────────────────────────────────────────────────────────────────
 st.set_page_config(layout="wide")
-st.title("Blind Pairwise LLM Response Evaluation")
+st.title("A/B Pairwise LLM Response Evaluation")
 
 all_evaluation_results = load_evaluation_results(EVAL_RESULTS_FILE)
 
@@ -207,20 +208,20 @@ if st.session_state.current_pair_index >= len(st.session_state.comparison_pairs)
 
 # ── RESULTS VIEW ────────────────────────────────────────────────────────────
 if st.session_state.evaluation_complete:
-    st.header("📊 Evaluation Complete!")
+    st.header("Evaluation Complete!")
     st.balloons()
 
     if not st.session_state.votes:
         st.warning("No votes were recorded.")
     else:
         summary, h2h = calculate_ab_results(st.session_state.votes)
-        st.subheader("📈 Overall Model Performance")
+        st.subheader("Overall Model Performance")
         st.dataframe(summary, use_container_width=True)
 
         st.subheader(" Head‑to‑Head Results (Wins / Ties / Losses)")
         st.dataframe(h2h, use_container_width=True)
 
-        if st.button("🔄 Start New Evaluation"):
+        if st.button("Start New Evaluation"):
             for k in [
                 "comparison_pairs",
                 "current_pair_index",

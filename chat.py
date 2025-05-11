@@ -166,7 +166,7 @@ def generate_conversational_response(model, tokenizer, chat_history):
         generation_kwargs = dict(
             input_ids=input_ids,
             attention_mask=attention_mask,
-            max_new_tokens=300,      # Max tokens to generate for the response
+            max_new_tokens=30,     # Max tokens to generate for the response
             temperature=0.7,       # Controls randomness (lower = more deterministic)
             top_p=0.9,             # Nucleus sampling probability
             top_k=50,              # Limits sampling to top K tokens

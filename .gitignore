@@ -1,3 +1,9 @@
+# Tensorboard logs
+logs/
+
+# Tuned Models
+Qwen*/
+
 # Apple Shananigans
 .DS_Store
 
