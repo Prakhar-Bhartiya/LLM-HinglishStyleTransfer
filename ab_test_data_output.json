@@ -1,0 +1,202 @@
+[
+  {
+    "prompt": "Hey kaise ho? College mein kya chal raha hai aajkal?",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Hey! Kya aapne college se pehle khelna chahiye? Aaj main apni class mein hai, yeh sab samay hota hai. Kuch ghar mein phirse zyada relax kar"
+  },
+  {
+    "prompt": "Yaar assignments ka bohot tension hai. Kuch tips?",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Tension about assignments, yaar? Bhai, maine yeh bhi ek baar laga tha. Toh tu kuch simple tricks likho: Time table bnao, important topics first jaao, aur regular revision kar"
+  },
+  {
+    "prompt": "Suggest some cool places to hangout near campus.",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Hey there! Near your campus, there are several spots that could be fun to hang out at. One popular place is the Student Union building. It's like a mini-mall where you can grab snacks, have a coffee, and maybe even find"
+  },
+  {
+    "prompt": "What did you think of the canteen food today?",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Oh, the canteen food was alright! I usually love their veg biryani, but today they had something different and it wasn't as tasty as usual. What about you? Was there any particular dish you enjoyed or didn't enjoy today"
+  },
+  {
+    "prompt": "Exams aa rahe hain, dar lag raha hai bhai.",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Aapki ek jyada exam ki karozi pad gayi! Kuch dhyan rakhenge par aapko kya advice dijiye? Doubt ke liye help karna main acha laga. Baki"
+  },
+  {
+    "prompt": "Kal ka lecture attend kiya ya bunk maar diya?",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Baat main baat kar raha hoon, apne aap kahan tak reach huye? Kal ka lecture attend kiya ya bunk maar diya? Haan, apne samay pe yeh bhi zyada important"
+  },
+  {
+    "prompt": "Hostel ki light firse chali gayi kya?",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Light pehle nahi chal jati, kyunki hum hostel mein diye the lights baad mai! Iska kya karna tha? Aur hostel mein phirse light se kaise bahut important hai?"
+  },
+  {
+    "prompt": "Tu fest ke liye audition de raha hai kya?",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Haan, ek baar mera naam dijiye na? Waise toh phir se kuch aur festes mein audition karne ki zaroorat ho skti hai. Kisi festival ka na?\nHo sakta hai,"
+  },
+  {
+    "prompt": "Kya placement ka kuch update mila?",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Update ho gya? Abhi tak sabse pehle, ek big company ko 20-30 students ki offer le di hai. Tu kitna happy ho gaya? Placement process kab start hota hai?"
+  },
+  {
+    "prompt": "Online classes bore kar rahe hain, koi escape idea?",
+    "model_name": "Qwen2.5-3B_Hinglish_base",
+    "response": "Online classes sure can be boring sometimes. To make them more exciting, you could try setting up a dedicated study area at home, maybe even a cozy corner with some soft lighting. What's your go-to way to stay motivated during online sessions?"
+  },
+  {
+    "prompt": "Hey kaise ho? College mein kya chal raha hai aajkal?",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Study schedule ka kya lagta hai. Syllabus bahut zyada hai aur time kam. Aur food ke liye, phir kar sakta hoon! Koi solution bhi le aana kya? Thoda pressure"
+  },
+  {
+    "prompt": "Yaar assignments ka bohot tension hai. Kuch tips?",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Kitsap Valley College has some tough subjects, right? Try to understand concepts before going over them. Thoda practice karke pad raha hai. Aur kuch extra tutoring? Tum batao, lagta hai! Focus mein."
+  },
+  {
+    "prompt": "Suggest some cool places to hangout near campus.",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Hmm, maybe explore 'The Annex'? It's got those classic clubs! Or try 'The Common' for food and drinks? Thandi banta hai. Koi kuch interesting nahi, thoda crowded hai. Have you checked out '"
+  },
+  {
+    "prompt": "What did you think of the canteen food today?",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Not too bad, but the naan was overpriced. How's that? Koi alternative kaise hai? I need something lighter. 🤣💕 2nd time! 😭😭😭 3rd time! 🤦"
+  },
+  {
+    "prompt": "Exams aa rahe hain, dar lag raha hai bhai.",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Haan, woh toh hai. Syllabus bahut zyada hai aur time kam. Kaise manage karein? I feel stressed. Chalo, tumhare preparation le aana. Aur kuch tips? Online help"
+  },
+  {
+    "prompt": "Kal ka lecture attend kiya ya bunk maar diya?",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Main toh kuch hain, teacher wali bhi hai. Tum milte hain lecture ke liye. Baki lagta hai. Aur main baare mein kuch ho raha tha syllabus thoda nahi ki"
+  },
+  {
+    "prompt": "Hostel ki light firse chali gayi kya?",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Main bas hostel hai, thoda ek baar. Tumhara bhi keh rahe hain aur kuch nahi. Tu batao, thoda space hai dekho! Koi balcony hai? Abhi room"
+  },
+  {
+    "prompt": "Tu fest ke liye audition de raha hai kya?",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Haan, yaar! But I'm not sure if they'll hire me. Thoda hard work lene mein. Kuch bhi na toh nahi hai. What's your opinion? Koi suggestion? Try kar le thoda"
+  },
+  {
+    "prompt": "Kya placement ka kuch update mila?",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Main exam ke liye, woh toh hai na. Syllabus bahut zyada hai. Exam date se bata dena. Tum ek hint lagega. Aur preparation kitne lete hain. Koi"
+  },
+  {
+    "prompt": "Online classes bore kar rahe hain, koi escape idea?",
+    "model_name": "Qwen2.5-0.5B_Hinglish_FFT",
+    "response": "Haan bhai, same here! How about we try a coding challenge online? Ya phir a hackathon? Thoda team building aur skill development ke liye. Kya kehte ho? Let's explore options together! 2nd"
+  },
+  {
+    "prompt": "Hey kaise ho? College mein kya chal raha hai aajkal?",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Hi! Sab theek hai, syllabus thoda pressure hai. Tum batao? Koi idea hai? Tu bhi kya lagta hai? Any tips? I need all the help I can get! 😅 �"
+  },
+  {
+    "prompt": "Yaar assignments ka bohot tension hai. Kuch tips?",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Try breaking them down into smaller parts, Rahul. It helps manage the workload. Aur deadline mein thoda buffer rakho. Slack me set kar le. 20 minutes ka break leke interval rakho. That works for me. Mere"
+  },
+  {
+    "prompt": "Suggest some cool places to hangout near campus.",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Try the University Cafe or The Corner, both have great vibes. Ya phir, there's always that new place, 'The Brew Room'? Heard it's got some good vibes too! Kya lagta hai? 2305 East"
+  },
+  {
+    "prompt": "What did you think of the canteen food today?",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "The dal-chawal was good, but the chapati was overcooked. Thoda adjustment karna padega. Kya kehti ho? Should we try ordering in? It's been a long week. Restaurant wala option bhi hai"
+  },
+  {
+    "prompt": "Exams aa rahe hain, dar lag raha hai bhai.",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Haan yaar tension mat le. Notes bana li? Tu sachha student hai. Baki subject mein kya scene hai? Ya phir assignments bhi hai? Koi help chahiye toh batana. Tu apne"
+  },
+  {
+    "prompt": "Kal ka lecture attend kiya ya bunk maar diya?",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Lecture toh hui thi, but notes bhi nahi hui. Samajh nahi aa raha kya topic tha. Bunk karne mein koi alag nahi. Exam ke liye practice set karna"
+  },
+  {
+    "prompt": "Hostel ki light firse chali gayi kya?",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Haan yaar, woh toh lag rahi hai. Kuch nahi hai. Maybe warning dikhwa raha hai. Check kar lo. Aur koi issue nahi hui? Koi complaint toh nahi h"
+  },
+  {
+    "prompt": "Tu fest ke liye audition de raha hai kya?",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Haan bhai! Woh toh hoga abhi tak. Tumhara kya plan hai? Koi event ho gaya toh? Ya fir kuch karne ka? Koi idea hai? I need some motivation"
+  },
+  {
+    "prompt": "Kya placement ka kuch update mila?",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Nahi yaar, abhi tak toh nahi. But placements thode zyada shuru ho rahe hain. You should check again after a week. I think average salary bhi dekhte hai. Aur placements mein"
+  },
+  {
+    "prompt": "Online classes bore kar rahe hain, koi escape idea?",
+    "model_name": "Qwen2.5-3B_Hinglish_LoRA",
+    "response": "Try study groups or online forums, thoda social ho jayega. Aur kuch? Netflix bhi try kar sakte hain! 🤣 Ya phir nature hikes ki idea? Woh bhi try karna hai. Th"
+  },
+  {
+    "prompt": "Hey kaise ho? College mein kya chal raha hai aajkal?",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Kya batau yaar, thoda pressure hai. Syllabus bohot zyada hai. Tu bata, how are you managing? Any tips? I feel like I'm struggling. Tu kya karta hai? K"
+  },
+  {
+    "prompt": "Yaar assignments ka bohot tension hai. Kuch tips?",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Time management try kar! Aur koi online courses check kar le. Bhi help hoti hai. Don't stress too much, haan? Chai piyegi? My treat! 😄️ 🍵✨ #UniLife"
+  },
+  {
+    "prompt": "Suggest some cool places to hangout near campus.",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Hmm, there's this new rooftop bar, 'Sky Lounge'. Or maybe the park near 'The Quad'? It's always buzzing. What's your preference? Coffee or chill vibes? Coffee is good if you want something specific. Otherwise, check reviews"
+  },
+  {
+    "prompt": "What did you think of the canteen food today?",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "The dal makhani was good, but the thodi was overpriced. Koi aur option chahiye! 🤔 What about you? Yaar! Any good places nearby? I'm starving! 😋 #canteen"
+  },
+  {
+    "prompt": "Exams aa rahe hain, dar lag raha hai bhai.",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Kya hoga yaar? Syllabus bohot hai na. Notes bhi nahi hain? Tu. Kaise kar sakta hai? Time pressure badh gaya hai. Chal, saath mein notes banate h"
+  },
+  {
+    "prompt": "Kal ka lecture attend kiya ya bunk maar diya?",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Bunk kar diya thoda. Late ho gaya tha. Sabse pehle attendance check kar li thi. Koi baat nahi. Professor thodi agasai thi. Yaar, mood bhi down lagi hai."
+  },
+  {
+    "prompt": "Hostel ki light firse chali gayi kya?",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Haan, lights on reh gaye hain. Pollution badhiya hai! 🌍✨ Pollution control is key these days, yaar. What's cooking? Any plans for the weekend? We can brainstorm together if you want."
+  },
+  {
+    "prompt": "Tu fest ke liye audition de raha hai kya?",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Haan bhai! Lagakar soch raha tha. Kya scene hai? Koi bhi help karu toh. Just let me know! Abhi prepare karne do! Chal! Yaar! Wohi"
+  },
+  {
+    "prompt": "Kya placement ka kuch update mila?",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Nahi yaar, abhi tak toh kuch nahi. Process still ongoing hai. You should check it soon. Don't worry too much though, things will work out eventually. Chill maar rahe hain. Tum bata"
+  },
+  {
+    "prompt": "Online classes bore kar rahe hain, koi escape idea?",
+    "model_name": "Qwen2.5-3B_Hinglish_QLoRA",
+    "response": "Try some online games or even a workout app. Thoda distraction ho jayega. Ya phir, virtual tours try karo! Museums ya even nature spots milte hain. Chai break ke baad kuch fresh ho j"
+  }
+]

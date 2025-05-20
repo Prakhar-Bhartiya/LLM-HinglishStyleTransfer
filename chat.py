@@ -1,22 +1,14 @@
 """
-Chat interface
-
-To Run Use : `streamlit run chat.py`
-
-**Required Dependencies:**
-pip install streamlit
+Chat interface, dynamically load and interact with various LLM models at runtime.
 """
 
 import streamlit as st
 import torch
 import os
-import gc  # garbage collector
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-    BitsAndBytesConfig,
-)
-from peft import PeftModel
+import gc
+
+from load_llm_util import load_base_model_for_inference, load_fft_model_for_inference, load_lora_model_for_inference, load_qlora_model_for_inference
+
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -24,105 +16,83 @@ warnings.filterwarnings("ignore")
 # Base Model ID from Hugging Face
 MODEL_ID = "Qwen/Qwen2.5-3B-Instruct"
 
-# QLoRA Adapter Path (Directory containing adapter_config.json, etc.)
-QLORA_ADAPTER_PATH = "<SET_PATH>" 
+# FFT Model Path (Directory containing tokenizer_config.json, model.safetensor, etc.)
+# FFT_PATH = "<SET_PATH>" 
+FFT_PATH = "./Qwen2.5-0.5B-Instruct_hinglish_finetune/Qwen2.5-0.5B-Instruct/full_finetune"
 
 # LoRA Adapter Path (Directory containing adapter_config.json, etc.)
-LORA_ADAPTER_PATH = "<SET_PATH>" 
+# LORA_ADAPTER_PATH = "<SET_PATH>" 
+LORA_ADAPTER_PATH = "./Qwen2.5-3B-Instruct_hinglish_finetune/Qwen2.5-3B-Instruct/lora_finetune" 
+
+# QLoRA Adapter Path (Directory containing adapter_config.json, etc.)
+# QLORA_ADAPTER_PATH = "<SET_PATH>" 
+QLORA_ADAPTER_PATH = "./Qwen2.5-3B-Instruct_hinglish_finetune/Qwen2.5-3B-Instruct/qlora_finetune" 
+
 
 # System Prompt defining the chatbot's persona
 SYSTEM_PROMPT = "You are a helpful college friend who talks only in Hinglish (a mix of Hindi and English used in urban India). Be casual, friendly, and use common Hinglish slang. Do not use formal Hindi or pure English."
 
-# QLoRA Config (Ensure this EXACTLY matches the config used during QLoRA training)
-bnb_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_quant_type="nf4",       # Ensure this matches training
-    bnb_4bit_compute_dtype=torch.bfloat16, # Ensure this matches training compute dtype
-    bnb_4bit_use_double_quant=True, # Ensure this matches training
-)
-
 # --- Model Loading Functions ---
-
-# [TODO] Implement load_full_fine_tune_model_for_inference()
 
 # @st.cache_resource is crucial to load the model only once per session!
 @st.cache_resource
-def load_lora_model_for_inference(_base_model_id, _adapter_path):
+def load_base_model(model_path):
+    """Loads base model for inference."""
+    st.write(f"Loading base model: {model_path}")
+
+    try:
+        model, tokenizer = load_base_model_for_inference(model_path)
+    except Exception as e:
+        st.error(f"Could not load model from path '{model_path}'. Error: {e}.")
+
+    st.write("Base Model and Tokenizer ready.")
+    return model, tokenizer
+
+@st.cache_resource
+def load_fft_model(model_path):
+    """Loads full finetuned model for inference."""
+    st.write(f"Loading FFT model: {model_path}")
+
+    if not os.path.isdir(model_path):
+        raise FileNotFoundError(f"FFT Model path not found: {model_path}")
+
+    try:
+        model, tokenizer = load_fft_model_for_inference(model_path)
+    except Exception as e:
+        st.error(f"Could not load model from path '{model_path}'. Error: {e}.")
+
+    st.write("FFT Model and Tokenizer ready.")
+    return model, tokenizer
+
+@st.cache_resource
+def load_lora_model(_base_model_id, _adapter_path):
     """Loads a LoRA model (base + adapters) for inference."""
     st.write(f"Loading LoRA model: Base='{_base_model_id}', Adapter='{_adapter_path}'")
 
     if not os.path.isdir(_adapter_path):
         raise FileNotFoundError(f"LoRA adapter path not found: {_adapter_path}")
 
-    # Use bfloat16 if available, otherwise float16
-    compute_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
-    model = AutoModelForCausalLM.from_pretrained(
-        _base_model_id,
-        torch_dtype=compute_dtype,
-        trust_remote_code=True, 
-        device_map="auto"        # Automatically distributes model across available devices, optional for single GPU arch.
-    )
-    st.write("Base model loaded.")
-
-    # Load the PEFT model (adapter) on top of the base model
-    model = PeftModel.from_pretrained(model, _adapter_path)
-    st.write("LoRA adapter loaded.")
-
-    # Load the tokenizer associated with the adapter/fine-tuning
-    # If this fails, try loading from _base_model_id instead.
     try:
-        tokenizer = AutoTokenizer.from_pretrained(_adapter_path, trust_remote_code=True)
+        model, tokenizer = load_lora_model_for_inference(_base_model_id, _adapter_path)
     except Exception as e:
-        st.warning(f"Could not load tokenizer from adapter path '{_adapter_path}'. Error: {e}. Falling back to base model '{_base_model_id}'.")
-        tokenizer = AutoTokenizer.from_pretrained(_base_model_id, trust_remote_code=True)
-
-    # Set padding token if not already set
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-        st.write("Tokenizer pad_token set to eos_token.")
-    model.config.pad_token_id = tokenizer.pad_token_id
-
-    # DO NOT merge_and_unload here for interactive use, PEFT handles inference efficiently.
-    model = model.merge_and_unload() 
+        st.error(f"Could not load model from path '{_adapter_path}'. Error: {e}.")
 
     st.write("LoRA Model and Tokenizer ready.")
     return model, tokenizer
 
-# @st.cache_resource
 @st.cache_resource
-def load_qlora_model_for_inference(_base_model_id, _adapter_path, _bnb_config):
+def load_qlora_model(_base_model_id, _adapter_path, _bnb_config):
     """Loads a QLoRA model (quantized base + adapters) for inference."""
     st.write(f"Loading QLoRA model: Base='{_base_model_id}', Adapter='{_adapter_path}'")
 
     if not os.path.isdir(_adapter_path):
         raise FileNotFoundError(f"QLoRA adapter path not found: {_adapter_path}")
 
-    # Determine the compute dtype directly from bnb_config
-    # The config already holds the torch.dtype object (e.g., torch.bfloat16)
-    compute_dtype = _bnb_config.bnb_4bit_compute_dtype
-
-
-    # Load the base model with quantization config
-    model = AutoModelForCausalLM.from_pretrained(
-        _base_model_id,
-        quantization_config=_bnb_config, # Apply QLoRA quantization
-        torch_dtype=compute_dtype,      # Use the determined compute dtype
-        trust_remote_code=True,         # Necessary for some models like Qwen
-        device_map="auto"               # Automatically distributes model across available devices
-    )
-    st.write("Base model loaded with QLoRA config.")
-
-    # Load the PEFT model (adapter) on top of the quantized base model
-    model = PeftModel.from_pretrained(model, _adapter_path)
-    st.write("QLoRA adapter loaded.")
-
-    # Load the tokenizer associated with the adapter/fine-tuning
     try:
-        tokenizer = AutoTokenizer.from_pretrained(_adapter_path, trust_remote_code=True)
+        model, tokenizer = load_qlora_model_for_inference(_base_model_id, _adapter_path)
     except Exception as e:
-        st.warning(f"Could not load tokenizer from adapter path '{_adapter_path}'. Error: {e}. Falling back to base model '{_base_model_id}'.")
-        tokenizer = AutoTokenizer.from_pretrained(_base_model_id, trust_remote_code=True)
-
+        st.error(f"Could not load model from path '{_adapter_path}'. Error: {e}.")
+   
     # Set padding token if not already set
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
@@ -145,7 +115,8 @@ def generate_conversational_response(model, tokenizer, chat_history):
     # Prepare the conversation in the format the model expects
     # The apply_chat_template function handles the specific formatting for the model.
     # Ensure the history includes the system prompt if needed by the template.
-    # For Qwen2, the template usually expects the first message to be the system prompt.
+
+    # For Qwen2.5, the template usually expects the first message to be the system prompt.
     formatted_history = []
     if chat_history and chat_history[0].get("role") != "system":
          formatted_history.append({"role": "system", "content": SYSTEM_PROMPT})
@@ -166,7 +137,7 @@ def generate_conversational_response(model, tokenizer, chat_history):
         generation_kwargs = dict(
             input_ids=input_ids,
             attention_mask=attention_mask,
-            max_new_tokens=30,     # Max tokens to generate for the response
+            max_new_tokens=50,     # Max tokens to generate for the response
             temperature=0.7,       # Controls randomness (lower = more deterministic)
             top_p=0.9,             # Nucleus sampling probability
             top_k=50,              # Limits sampling to top K tokens
@@ -190,8 +161,7 @@ def generate_conversational_response(model, tokenizer, chat_history):
 # --- Streamlit App ---
 
 st.set_page_config(page_title="Hinglish Chat Buddy", page_icon="🤖", layout="wide")
-st.title("🤖 Hinglish Chat Buddy")
-st.caption(f"Your friendly AI dost, powered by {MODEL_ID} with fine-tuned adapters.")
+st.title("Hinglish Chat Buddy")
 
 # --- Model Loading UI ---
 if "model_loaded" not in st.session_state:
@@ -202,29 +172,30 @@ if not st.session_state["model_loaded"]:
     st.subheader("Select and Load Model")
     model_choice = st.radio(
         "Choose adapter type to load:",
-        ("QLoRA", "LoRA"),
+        ("Base", "FFT", "LoRA", "QLoRA"),
         key="model_choice_radio",
         horizontal=True
     )
-    
-    adapter_path_to_check = QLORA_ADAPTER_PATH if model_choice == "QLoRA" else LORA_ADAPTER_PATH
-    if not os.path.isdir(adapter_path_to_check):
-         st.error(f"Error: Adapter path not found or is not a directory: '{adapter_path_to_check}'. Please verify the path in the script.")
-         st.stop()
-    else:
-         st.success(f"Adapter path found: '{adapter_path_to_check}'")
-
 
     if st.button(f"Load {model_choice} Model", key="load_model_button"):
         st.info(f"Loading {model_choice} model... This might take a few minutes.")
         progress_bar = st.progress(0, text="Initializing...")
         try:
-            if model_choice == "QLoRA":
-                progress_bar.progress(30, text="Loading QLoRA model...")
-                model, tokenizer = load_qlora_model_for_inference(MODEL_ID, QLORA_ADAPTER_PATH, bnb_config)
-            else: # LoRA
+            if model_choice == "Base":
+                progress_bar.progress(30, text="Loading Base model...")
+                model, tokenizer = load_base_model(MODEL_ID)
+
+            elif model_choice == "FFT":
+                progress_bar.progress(30, text="Loading FFT model...")
+                model, tokenizer = load_fft_model(FFT_PATH)
+
+            elif model_choice == "LoRA":
                 progress_bar.progress(30, text="Loading LoRA model...")
-                model, tokenizer = load_lora_model_for_inference(MODEL_ID, LORA_ADAPTER_PATH)
+                model, tokenizer = load_lora_model(MODEL_ID, LORA_ADAPTER_PATH)
+
+            else: # QLoRA
+                progress_bar.progress(30, text="Loading QLoRA model...")
+                model, tokenizer = load_qlora_model(MODEL_ID, QLORA_ADAPTER_PATH)
 
             progress_bar.progress(90, text="Finalizing setup...")
             st.session_state["model"] = model
