@@ -1,4 +1,4 @@
-# LLM Hinglish Style Transfer
+# LLM Finetune Playground
 
 This repository offers a practical and comprehensive guide to fine-tuning large language models (LLMs) for generating responses in Hinglish—a colloquial mix of Hindi and English widely spoken in urban India. While Hinglish is the chosen task for demonstration, the techniques and learnings presented here are broadly applicable and can be translated to a wide range of other tasks.
 
@@ -37,11 +37,6 @@ Key features include hands-on demonstrations of Full Fine-Tuning, LoRA (Low-Rank
 ## Getting Started
 
 1. **Clone the Repository:**
-
-   ```bash
-   git clone https://github.com/Prakhar-Bhartiya/LLM-HinglishStyleTransfer.git
-   cd LLM-HinglishStyleTransfer
-   ```
 
 2. **Install Dependencies:**
 
