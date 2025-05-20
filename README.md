@@ -34,6 +34,16 @@ Key features include hands-on demonstrations of Full Fine-Tuning, LoRA (Low-Rank
 - **Extensible Evaluation Tools:**  
   Includes notebooks and scripts to evaluate model performance, compare different fine-tuning methods, and conduct A/B testing between model variants.
 
+
+
+https://github.com/user-attachments/assets/bf92d102-046a-4f66-9d7a-cc4e2c58e6a7
+
+
+
+https://github.com/user-attachments/assets/e6c37e3a-888f-413f-9225-7f6de59a2d01
+
+
+
 ## Getting Started
 
 1. **Clone the Repository:**
@@ -53,8 +63,12 @@ cd llm-finetune-playground
 3. **Run Notebooks and Scripts:**
 
    - Use Jupyter Notebook or VS Code to open and run `Qwen2.5-Models-FineTuning.ipynb` and `Evaluations.ipynb`.
-   - Run the `ab_test.py` script to perform comparative evaluation of fine-tuning strategies.
+   - Run the `ab_testing.py` script to perform comparative evaluation of fine-tuning strategies.
    - Use the `chat.py` script for an interactive session with the fine-tuned model.
+  
+## TODOs
+- Train in the cloud and push final checkpoints to Hugging Face Hub
+- Add Hugging Face Spaces UI for interactive demos
 
 ## Contributing
 
