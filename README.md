@@ -47,10 +47,10 @@ https://github.com/user-attachments/assets/e6c37e3a-888f-413f-9225-7f6de59a2d01
 ## Getting Started
 
 1. **Clone the Repository:**
-```bash
-git clone https://github.com/Prakhar-Bhartiya/llm-finetune-playground.git
-cd llm-finetune-playground
-```
+    ```bash
+    git clone https://github.com/Prakhar-Bhartiya/llm-finetune-playground.git
+    cd llm-finetune-playground
+    ```
 
 2. **Install Dependencies:**
 
