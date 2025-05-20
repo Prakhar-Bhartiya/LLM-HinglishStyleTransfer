@@ -39,7 +39,7 @@ Key features include hands-on demonstrations of Full Fine-Tuning, LoRA (Low-Rank
 1. **Clone the Repository:**
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/Prakhar-Bhartiya/LLM-HinglishStyleTransfer.git
    cd LLM-HinglishStyleTransfer
    ```
 
