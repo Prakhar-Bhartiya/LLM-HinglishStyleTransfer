@@ -67,8 +67,8 @@ https://github.com/user-attachments/assets/e6c37e3a-888f-413f-9225-7f6de59a2d01
    - Use the `chat.py` script for an interactive session with the fine-tuned model.
   
 ## TODOs
-- Train in the cloud and push final checkpoints to Hugging Face Hub
-- Add Hugging Face Spaces UI for interactive demos
+- [ ] Train in the cloud and push final checkpoints to Hugging Face Hub
+- [ ] Add Hugging Face Spaces UI for interactive demos
 
 ## Contributing
 
