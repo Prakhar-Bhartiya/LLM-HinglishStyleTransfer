@@ -37,6 +37,10 @@ Key features include hands-on demonstrations of Full Fine-Tuning, LoRA (Low-Rank
 ## Getting Started
 
 1. **Clone the Repository:**
+```bash
+git clone https://github.com/Prakhar-Bhartiya/llm-finetune-playground.git
+cd llm-finetune-playground
+```
 
 2. **Install Dependencies:**
 
